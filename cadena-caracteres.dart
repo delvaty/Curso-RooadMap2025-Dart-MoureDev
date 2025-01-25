@@ -117,108 +117,132 @@ void main() {
     1: "Opción 1: Búsqueda",
     2: "Opción 2: Inserción",
     3: "Opción 3: Actualización",
-    4: "Opción 4: Elimanción de contactos",
+    4: "Opción 4: Eliminación de contactos",
   };
 
   Map<String, int> contact = {
     'robertd': 56395232,
     'ana': 58471236,
     'héctor': 54887654,
-    'isaney': 537886454
+    'isaney': 537886454,
   };
 
   while (true) {
-    // Mostrar menú
-    print("\nMenú de opciones: ");
-    option.forEach((number, description){
-      print("${number}. ${description}");
-    });
+    printMenu(option);
+    int? chooseOption = getUserOption(option.keys);
 
-    // Pedir al usuario que elija una opción
-    stdout.write("\nIntroduce el número de la opción que deseas: ");
-    String? entries= stdin.readLineSync();
-
-    //Valor de entrada
-    if (entries == null || int.tryParse(entries)== null) {
-      print("⚠️ Entrada inválida. Introduce un número válido.");
-      continue;
-    }
-
-    int chooseOption= int.parse(entries);
-    
-    // Comprobar si existe la opción
-    if (option.containsKey(chooseOption)) {
-      print("\nHas seleccionado: ${option[chooseOption]}");
-    }else{
+    if (chooseOption == null) {
       print("⚠️ Opción no válida. Intenta de nuevo.");
       continue;
     }
 
-    // Lógica para cada opción
     switch (chooseOption) {
-      case 1: // Búsqueda
-        stdout.write("\nItroduce el nombre de contacto a buscar: ");
-        String? nameSearch = stdin.readLineSync();
-        if(nameSearch != null && contact.containsKey(nameSearch)){
-          print("✅ Contacto encontrado: ${nameSearch} - ${contact[nameSearch]}");
-        }else{
-          print("❌ Contacto no encontrado.");
-        }
+      case 1:
+        searchContact(contact);
         break;
-        case 2: // Inserción
-        stdout.write("\nIntroduce el nombre del nuevo contacto: ");
-        String? newName = stdin.readLineSync();
-        if(newName!= null && newName.isNotEmpty){
-          if (contact.containsKey((newName))) {
-            print("⚠️ El contacto ya existe");
-          }else{
-            stdout.write("\nIntroduce el número de teléfono del nuevo contacto: ");
-            String? newPhone = stdin.readLineSync();
-            if (newPhone != null && int.tryParse(newPhone) != null) {
-              contact[newName] = int.parse(newPhone);
-              print("✅ Contacto añadido: ${newName} - ${contact[newName]}");
-
-            } else{
-              print("⚠️ Número de teléfono inválido.");
-            }
-          }
-        } else{
-          print("⚠️ Nombre inválido.");
-        }
+      case 2:
+        addContact(contact);
         break;
-
-        case 3: // Actualización
-        stdout.write("\nIntroduce el nombre de contacto a actualizar: ");
-        String? updateName= stdin.readLineSync();
-        if(updateName != null && contact.containsValue(updateName) ){
-          stdout.write("Introduce el nuevo número de teléfono: ");
-          String? updatePhone= stdin.readLineSync();
-          if (updatePhone != null && int.tryParse(updatePhone) != null) {
-            contact[updateName] = int.parse(updatePhone);
-            print("✅ Contacto actualizado: $updateName - ${contact[updateName]}");
-
-          }else{
-            print("⚠️ Número de teléfono inválido.");
-
-          }
-        }else{
-          print("❌ Contacto no encontrado.");
-        }
+      case 3:
+        updateContact(contact);
         break;
-
-        case 4: // Eliminación
-        stdout.write("\nEscribe el nombre de contacto a eliminar: ");
-        String? deleteContact = stdin.readLineSync();
-        if(deleteContact != null && contact.containsKey(deleteContact)){
-          contact.remove(deleteContact);
-        }else{
-          print("❌ Contacto no encontrado.");
-        }
+      case 4:
+        deleteContact(contact);
         break;
       default:
-      print("⚠️ Opción no válida.");
+        print("⚠️ Opción no válida.");
     }
+  }
+}
 
+void printMenu(Map<int, String> options) {
+  print("\nMenú de opciones:");
+  options.forEach((key, value) {
+    print("$key. $value");
+  });
+}
+
+int? getUserOption(Iterable<int> validOptions) {
+  stdout.write("\nIntroduce el número de la opción que deseas: ");
+  String? input = stdin.readLineSync();
+
+  if (input == null || int.tryParse(input) == null) {
+    return null;
+  }
+
+  int option = int.parse(input);
+  return validOptions.contains(option) ? option : null;
+}
+
+void searchContact(Map<String, int> contact) {
+  stdout.write("\nIntroduce el nombre del contacto a buscar: ");
+  String? name = stdin.readLineSync();
+
+  if (name != null && contact.containsKey(name)) {
+    print("✅ Contacto encontrado: $name - ${contact[name]}");
+  } else {
+    print("❌ Contacto no encontrado.");
+  }
+}
+
+void addContact(Map<String, int> contact) {
+  stdout.write("\nIntroduce el nombre del nuevo contacto: ");
+  String? name = stdin.readLineSync();
+
+  if (name == null || name.isEmpty) {
+    print("⚠️ Nombre inválido.");
+    return;
+  }
+
+  if (contact.containsKey(name)) {
+    print("⚠️ El contacto ya existe.");
+    return;
+  }
+
+  stdout.write("\nIntroduce el número de teléfono del nuevo contacto: ");
+  String? phoneInput = stdin.readLineSync();
+
+  if (phoneInput == null || int.tryParse(phoneInput) == null) {
+    print("⚠️ Número de teléfono inválido.");
+    return;
+  }
+
+  int phone = int.parse(phoneInput);
+  contact[name] = phone;
+  print("✅ Contacto añadido: $name - $phone");
+}
+
+void updateContact(Map<String, int> contact) {
+  stdout.write("\nIntroduce el nombre del contacto a actualizar: ");
+  String? name = stdin.readLineSync();
+
+  if (name == null || !contact.containsKey(name)) {
+    print("❌ Contacto no encontrado.");
+    return;
+  }
+
+  stdout.write("\nIntroduce el nuevo número de teléfono: ");
+  String? phoneInput = stdin.readLineSync();
+
+  if (phoneInput == null || int.tryParse(phoneInput) == null) {
+    print("⚠️ Número de teléfono inválido.");
+    return;
+  }
+
+  int phone = int.parse(phoneInput);
+  contact[name] = phone;
+  print("✅ Contacto actualizado: $name - $phone");
+}
+
+void deleteContact(Map<String, int> contact) {
+  stdout.write("\nIntroduce el nombre del contacto a eliminar: ");
+  String? name = stdin.readLineSync();
+
+  if (name != null && contact.containsKey(name)) {
+    contact.remove(name);
+    print("✅ Contacto eliminado: $name");
+  } else {
+    print("❌ Contacto no encontrado.");
   }
 
 
