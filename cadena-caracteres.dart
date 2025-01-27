@@ -1,253 +1,145 @@
-import 'dart:collection';
 import 'dart:io';
 
 void main() {
-  // Creación de una lista
-  List<int> numeros = [4, 2, 8, 1];
+  // Acceso a caracteres específicos
+  String texto = "Hola Mundo";
+  print(texto[0]); // H (primer carácter)
+  print(texto[5]); // M (sexto carácter)
 
-  // Inserción
-  numeros.add(6); // Agrega el número 6
-  numeros.insert(2, 5); // Agrega en la posición 2(index) de la lista el #5
+  // Longitud de cadena
+  String text = "Hello World";
+  print(text.length); //10
 
-  // Actualización
-  numeros[0] = 10; // agrega en la posición 0 el #10
+  // Subcadenas
+  String text1 = "Esto es un texto";
+  print(text1.substring(0, 4)); // "Esto" (del índice 0 al 3)
+  print(text1.substring(5)); // "es un texto" (del índice 5 hasta el final)
 
-  // Borrado
-  numeros.remove(8); // elimina el elemento 8
-  numeros.removeAt(1); // elimina el # de la posición 1, en este caso es el #2
+  //Concatenación
+  String gretting = "Hola";
+  String place = "Mundo";
+  print(gretting + " " + place); // "Hola Mundo";
+  print("${gretting} ${place}"); // "Hola Mundo" (interpolación)
 
-  // Ordenación
-  numeros.sort(); // Ordena los números
+  // Repetición
+  String language = "Dart";
+  print(language * 3); // "Dart Dart Dart"
 
-  print('Lista: $numeros'); // Salida: Lista: [1, 5, 6, 10]
+  // Recorrido
+  String word = "Hola";
+  for (var char in word.runes) {
+    print(String.fromCharCode(char)); // Imprime H, o, l, a en líneas separadas
+  }
 
-  // Creación de un conjunto
-  Set<String> frutas = {
-    'manzana',
-    'pera',
-    'naranja'
-  }; //Coleciión de elementos únicos que no permite duplicados
+  // Conversión a mayúsculas y minúsculas
+  String word1 = "Hola Mundo";
+  print(word1.toUpperCase()); // "HOLA MUNDO"
+  print(word1.toLowerCase()); // "hola mundo"
 
-  // Inserción
-  frutas.add('uva');
-  frutas.add('pera'); // No se duplicará
+  // Reemplazo
+  String text2 = "Hola mundo";
+  print(text2.replaceAll("o", "O")); // "HOla MundO"
+  print(text2.replaceFirst("o", "O")); // "HOla Mundo"
 
-  // Borrado
-  frutas.remove('naranja');
+  // División
+  String language1 = "Dart es increíble";
+  List<String> palabras = language1.split(" ");
+  print(palabras); // ["Dart", "es", "increíble"]
 
-  // Actualización (eliminamos y volvemos a insertar)
-  frutas.remove('pera');
-  frutas.add('plátano');
+  // Unión 
+  List<String> word2 = ["Dart", "es", "genial"];
+  print(word2.join(" ")); // "Dart es genial"
 
-  // Ordenación (convertimos el Set a List temporalmente)
-  List<String> frutasOrdenadas = frutas.toList()
-    ..sort(); // frutas.toList() convierte el Set en una lista(List). Ess necesario porque un Set no tiene orden explícito pero una lista sí lo tiene
-  // ..sort() se usa el operador en cascacda que permite ejecutar un método en un mismo objeto. El método sort() ordena en forma ascendente
+  // Interpolación
+  String lenguaje = "Dart";
+  int version = 3;
+  print("Estoy aprendiendo $lenguaje versión $version");
 
-  print('Set original: $frutas'); // Salida: {manzana, uva, plátano}
-  print('Set ordenado: $frutasOrdenadas'); // Salida: [manzana, plátano, uva]
+  // Verificaciones
+  // Verifica si empieza o termina con algo
+  String word3 = "Hola Mundo";
+  print(word3.startsWith("Hola")); // true
+  print(word3.endsWith("Mundo")); // true
 
-  // Creación de un mapa
-  Map<String, int> stock = {
-    'manzana': 10,
-    'pera': 15,
-    'naranja': 8,
-  };
+  // Contiene un valor
+  String texto1 = "Hola Mundo";
+  print(texto1.contains("Mundo")); // true
 
-  // Inserción
-  stock['uva'] = 20;
+  // Comparaciones
+ String texto3 = "Hola";
+  String texto4 = "hola";
+  print(texto3 == texto4);                // false
+  print(texto3.compareTo(texto4));       // Resultado < 0 (mayúsculas vienen primero)
+  print(texto3.toLowerCase() == texto4.toLowerCase()); // true
 
-  // Actualización
-  stock['manzana'] = 5;
+  //Eliminación de espacios
+  String text5 = "   Hola Mundo   ";
+  print(text5.trim());      // "Hola Mundo"
+  print(text5.trimLeft());  // "Hola Mundo   "
+  print(text5.trimRight()); // "   Hola Mundo"
 
-  // Borrado
-  stock.remove('naranja');
+  // Conversión
+  //  Convertir a lista de caracteres:
+  String texto5 = "Hola";
+  print(texto5.split("")); // ["H", "o", "l", "a"]
 
-  // Ordenación (por claves)
-  var stockOrdenado = Map.fromEntries(
-      stock.entries.toList()..sort((a, b) => a.key.compareTo(b.key)));
+  // Convertir números o valores
+  int numero = 123;
+  String texto6 = numero.toString();
+  print(texto6); // "123"
 
-  print('Mapa original: $stock'); // Salida: {manzana: 5, pera: 15, uva: 20}
-  print(
-      'Mapa ordenado: $stockOrdenado'); // Salida: {manzana: 5, pera: 15, uva: 20}
+  // Operaciones Unicode
+  String wor4 = "Hola";
+  print(wor4.codeUnits); // [72, 111, 108, 97] (códigos Unicode)
 
-  // Creación de una cola
-  Queue<String> cola = Queue();
-
-  // Inserción
-  cola.add('Elemento 1');
-  cola.addFirst('Elemento 0'); // Inserta al inicio
-  cola.addLast('Elemento 2'); // Inserta al final
-
-  // Actualización (no hay acceso directo, se necesita eliminar y reinsertar)
-  cola.remove('Elemento 0');
-  cola.addFirst('Nuevo Elemento 0');
-
-  // Borrado
-  cola.removeFirst(); // Elimina el primer elemento
-  cola.removeLast(); // Elimina el último elemento
-
-  print('Cola: $cola'); // Salida: Cola: (Elemento 1)
-
-
-
-  // Creación de un rango utilizando Iterable
-  Iterable<int> rango = Iterable.generate(5, (index) => index + 1);
-
-  // Conversión a List para realizar operaciones
-  List<int> listaRango = rango.toList();
-
-  // Inserción
-  listaRango.add(6);
-
-  // Borrado
-  listaRango.remove(3);
-
-  // Actualización
-  listaRango[0] = 10;
-
-  // Ordenación
-  listaRango.sort();
-
-  print('Iterable: $listaRango'); // Salida: [2, 4, 5, 6, 10]
+  // Validaciones de cadena
+  String text6 = "";
+  print(text6.isEmpty); // true
+  print(text6.isNotEmpty); // false
 
   // Dificultad extra
-  // Opciones disponibles en el menú
-  Map<int, String> option = {
-    1: "Opción 1: Búsqueda",
-    2: "Opción 2: Inserción",
-    3: "Opción 3: Actualización",
-    4: "Opción 4: Eliminación de contactos",
-  };
+  // Entrada de dos palabras
+  stdout.write("\nIntroduce la primera palabra: ");
+  String? palabra1 = stdin.readLineSync()!.toLowerCase();
+  stdout.write("\nIntroduce la segunda palabra: ");
+  String? palabra2 = stdin.readLineSync()!.toLowerCase();
+  
+  // Comprobaciones para la primera palabra
+  print("\nAnálisis de la primera palabra: '$palabra1'");
+  print("¿Es palíndromo? ${esPalindromo(palabra1)}");
+  print("¿Es isograma? ${esIsograma(palabra1)}");
 
-  Map<String, int> contact = {
-    'robertd': 56395232,
-    'ana': 58471236,
-    'héctor': 54887654,
-    'isaney': 537886454,
-  };
+  // Comprobaciones para la segunda palabra
+  print("\nAnálisis de la segunda palabra: '$palabra2'");
+  print("¿Es palíndromo? ${esPalindromo(palabra2)}");
+  print("¿Es isograma? ${esIsograma(palabra2)}");
+  
+  // Comprobación de anagrama entre las dos palabras
+  print("\n¿Son anagramas? ${esAnagrama(palabra1, palabra2)}");
 
-  while (true) {
-    printMenu(option);
-    int? chooseOption = getUserOption(option.keys);
 
-    if (chooseOption == null) {
-      print("⚠️ Opción no válida. Intenta de nuevo.");
-      continue;
+}
+
+bool esPalindromo(String palabra) {
+  // Comprobar si la palabra es igual a su reverso
+  return palabra == palabra.split('').reversed.join('');
+}
+
+bool esAnagrama(String palabra1, String palabra2) {
+  // Comprobar si las dos palabras tienen las mismas letras, aunque en diferente orden
+  List<String> list1 = palabra1.split('').toList()..sort();
+  List<String> list2 = palabra2.split('').toList()..sort();
+  return list1.join('') == list2.join('');
+}
+
+bool esIsograma(String palabra) {
+  // Comprobar si la palabra no tiene letras repetidas
+  Set<String> caracteres = {};
+  for (var char in palabra.split('')) {
+    if (caracteres.contains(char)) {
+      return false; // Si se encuentra un carácter repetido, no es un isograma
     }
-
-    switch (chooseOption) {
-      case 1:
-        searchContact(contact);
-        break;
-      case 2:
-        addContact(contact);
-        break;
-      case 3:
-        updateContact(contact);
-        break;
-      case 4:
-        deleteContact(contact);
-        break;
-      default:
-        print("⚠️ Opción no válida.");
-    }
+    caracteres.add(char);
   }
-}
-
-void printMenu(Map<int, String> options) {
-  print("\nMenú de opciones:");
-  options.forEach((key, value) {
-    print("$key. $value");
-  });
-}
-
-int? getUserOption(Iterable<int> validOptions) {
-  stdout.write("\nIntroduce el número de la opción que deseas: ");
-  String? input = stdin.readLineSync();
-
-  if (input == null || int.tryParse(input) == null) {
-    return null;
-  }
-
-  int option = int.parse(input);
-  return validOptions.contains(option) ? option : null;
-}
-
-void searchContact(Map<String, int> contact) {
-  stdout.write("\nIntroduce el nombre del contacto a buscar: ");
-  String? name = stdin.readLineSync();
-
-  if (name != null && contact.containsKey(name)) {
-    print("✅ Contacto encontrado: $name - ${contact[name]}");
-  } else {
-    print("❌ Contacto no encontrado.");
-  }
-}
-
-void addContact(Map<String, int> contact) {
-  stdout.write("\nIntroduce el nombre del nuevo contacto: ");
-  String? name = stdin.readLineSync();
-
-  if (name == null || name.isEmpty) {
-    print("⚠️ Nombre inválido.");
-    return;
-  }
-
-  if (contact.containsKey(name)) {
-    print("⚠️ El contacto ya existe.");
-    return;
-  }
-
-  stdout.write("\nIntroduce el número de teléfono del nuevo contacto: ");
-  String? phoneInput = stdin.readLineSync();
-
-  if (phoneInput == null || int.tryParse(phoneInput) == null) {
-    print("⚠️ Número de teléfono inválido.");
-    return;
-  }
-
-  int phone = int.parse(phoneInput);
-  contact[name] = phone;
-  print("✅ Contacto añadido: $name - $phone");
-}
-
-void updateContact(Map<String, int> contact) {
-  stdout.write("\nIntroduce el nombre del contacto a actualizar: ");
-  String? name = stdin.readLineSync();
-
-  if (name == null || !contact.containsKey(name)) {
-    print("❌ Contacto no encontrado.");
-    return;
-  }
-
-  stdout.write("\nIntroduce el nuevo número de teléfono: ");
-  String? phoneInput = stdin.readLineSync();
-
-  if (phoneInput == null || int.tryParse(phoneInput) == null) {
-    print("⚠️ Número de teléfono inválido.");
-    return;
-  }
-
-  int phone = int.parse(phoneInput);
-  contact[name] = phone;
-  print("✅ Contacto actualizado: $name - $phone");
-}
-
-void deleteContact(Map<String, int> contact) {
-  stdout.write("\nIntroduce el nombre del contacto a eliminar: ");
-  String? name = stdin.readLineSync();
-
-  if (name != null && contact.containsKey(name)) {
-    contact.remove(name);
-    print("✅ Contacto eliminado: $name");
-  } else {
-    print("❌ Contacto no encontrado.");
-  }
-
-
-
-
-
-
+  return true;
 }
